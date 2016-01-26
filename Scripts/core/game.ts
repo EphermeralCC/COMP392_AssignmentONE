@@ -72,13 +72,25 @@ function init() {
     scene.add(plane);
     console.log("Added Plane Primitive to scene...");
     
-    //Add a Cube to the Scene
+    //Add a Head Cube to the Scene
     cubeMaterial = new LambertMaterial({color:0xE7D3B6});
-    cubeGeometry = new CubeGeometry(2, 2, 2);
+    cubeGeometry = new CubeGeometry(1, 1, 1);
     cube = new Mesh(cubeGeometry, cubeMaterial);
     cube.castShadow = true;
     cube.receiveShadow = true;
-    cube.position.y = 1;
+    cube.position.y = 5.75;
+    
+    cube.rotation.y = -0.010 * Math.PI;
+    scene.add(cube);
+    console.log("Added Cube Primitive to scene...");
+    
+    //Add a Torso Cube to the Scene
+    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeGeometry = new CubeGeometry(2, 2.5, 1.75);
+    cube = new Mesh(cubeGeometry, cubeMaterial);
+    cube.castShadow = true;
+    cube.receiveShadow = true;
+    cube.position.y = 4;
     
     cube.rotation.y = -0.010 * Math.PI;
     scene.add(cube);
