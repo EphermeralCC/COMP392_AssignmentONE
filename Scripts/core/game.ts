@@ -72,7 +72,7 @@ function init() {
     scene.add(plane);
     console.log("Added Plane Primitive to scene...");
     
-    //Add a Head Cube to the Scene
+    //Add a Cube Head to the Scene
     cubeMaterial = new LambertMaterial({color:0xE7D3B6});
     cubeGeometry = new CubeGeometry(1, 1, 1);
     cube = new Mesh(cubeGeometry, cubeMaterial);
@@ -82,9 +82,9 @@ function init() {
     
     cube.rotation.y = -0.010 * Math.PI;
     scene.add(cube);
-    console.log("Added Cube Primitive to scene...");
+    console.log("Added Cube Head to scene...");
     
-    //Add a Torso Cube to the Scene
+    //Add a Cube Torso to the Scene
     cubeMaterial = new LambertMaterial({color:0xE7D3B6});
     cubeGeometry = new CubeGeometry(2, 2.5, 1.75);
     cube = new Mesh(cubeGeometry, cubeMaterial);
@@ -94,7 +94,37 @@ function init() {
     
     cube.rotation.y = -0.010 * Math.PI;
     scene.add(cube);
-    console.log("Added Cube Primitive to scene...");
+    console.log("Added Cube Torso to scene...");
+    
+    //Add Left Cube Arm to the scene
+    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeGeometry = new CubeGeometry(0.5, 0.5, 2);
+    cube = new Mesh(cubeGeometry, cubeMaterial);
+    cube.castShadow = true;
+    cube.receiveShadow = true;
+    
+    cube.rotation.y = 0.5 * Math.PI;
+    cube.rotation.z = 0.5 * Math.PI;
+    cube.position.x = 2;
+    cube.position.y = 5;
+    
+    scene.add(cube);
+    console.log("Added Left Cube Arm to scene...");
+    
+    //Add Right Cube Arm to the scene
+    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeGeometry = new CubeGeometry(0.5, 0.5, 2);
+    cube = new Mesh(cubeGeometry, cubeMaterial);
+    cube.castShadow = true;
+    cube.receiveShadow = true;
+    
+    cube.rotation.y = -0.5 * Math.PI;
+    cube.rotation.z = 0.5 * Math.PI;
+    cube.position.x = -2;
+    cube.position.y = 5;
+    
+    scene.add(cube);
+    console.log("Added Right Cube Arm to scene...");
     
     
     // Add an AmbientLight to the scene
