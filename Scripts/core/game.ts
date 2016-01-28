@@ -75,56 +75,84 @@ function init() {
     //Add a Cube Head to the Scene
     cubeMaterial = new LambertMaterial({color:0xE7D3B6});
     cubeGeometry = new CubeGeometry(1, 1, 1);
-    cube = new Mesh(cubeGeometry, cubeMaterial);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
-    cube.position.y = 5.75;
+    var cubeHead:Mesh = new Mesh(cubeGeometry, cubeMaterial);
+    cubeHead.castShadow = true;
+    cubeHead.receiveShadow = true;
+    cubeHead.position.y = 5.75;
     
-    cube.rotation.y = -0.010 * Math.PI;
-    scene.add(cube);
+    cubeHead.rotation.y = -0.010 * Math.PI;
+    scene.add(cubeHead);
     console.log("Added Cube Head to scene...");
     
     //Add a Cube Torso to the Scene
     cubeMaterial = new LambertMaterial({color:0xE7D3B6});
     cubeGeometry = new CubeGeometry(2, 2.5, 1.75);
-    cube = new Mesh(cubeGeometry, cubeMaterial);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
-    cube.position.y = 4;
+    var cubeBody:Mesh = new Mesh(cubeGeometry, cubeMaterial);
+    cubeBody.castShadow = true;
+    cubeBody.receiveShadow = true;
+    cubeBody.position.y = 4;
     
-    cube.rotation.y = -0.010 * Math.PI;
-    scene.add(cube);
+    cubeBody.rotation.y = -0.010 * Math.PI;
+    scene.add(cubeBody);
     console.log("Added Cube Torso to scene...");
     
     //Add Left Cube Arm to the scene
     cubeMaterial = new LambertMaterial({color:0xE7D3B6});
     cubeGeometry = new CubeGeometry(0.5, 0.5, 2);
-    cube = new Mesh(cubeGeometry, cubeMaterial);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
+    var cubeLArm:Mesh = new Mesh(cubeGeometry, cubeMaterial);
+    cubeLArm.castShadow = true;
+    cubeLArm.receiveShadow = true;
     
-    cube.rotation.y = 0.5 * Math.PI;
-    cube.rotation.z = 0.5 * Math.PI;
-    cube.position.x = 2;
-    cube.position.y = 5;
+    cubeLArm.rotation.y = 0.5 * Math.PI;
+    cubeLArm.rotation.z = 0.5 * Math.PI;
+    cubeLArm.position.x = 2;
+    cubeLArm.position.y = 5;
     
-    scene.add(cube);
+    scene.add(cubeLArm);
     console.log("Added Left Cube Arm to scene...");
     
     //Add Right Cube Arm to the scene
     cubeMaterial = new LambertMaterial({color:0xE7D3B6});
     cubeGeometry = new CubeGeometry(0.5, 0.5, 2);
-    cube = new Mesh(cubeGeometry, cubeMaterial);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
+    var cubeRArm:Mesh = new Mesh(cubeGeometry, cubeMaterial);
+    cubeRArm.castShadow = true;
+    cubeRArm.receiveShadow = true;
     
-    cube.rotation.y = -0.5 * Math.PI;
-    cube.rotation.z = 0.5 * Math.PI;
-    cube.position.x = -2;
-    cube.position.y = 5;
+    cubeRArm.rotation.y = -0.5 * Math.PI;
+    cubeRArm.rotation.z = 0.5 * Math.PI;
+    cubeRArm.position.x = -2;
+    cubeRArm.position.y = 5;
     
-    scene.add(cube);
+    scene.add(cubeRArm);
     console.log("Added Right Cube Arm to scene...");
+    
+    //Add Left Cube Leg to the scene
+    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeGeometry = new CubeGeometry(0.75, 0.75, 2.750);
+    var cubeLLeg:Mesh = new Mesh(cubeGeometry, cubeMaterial);
+    cubeLLeg.castShadow = true;
+    cubeLLeg.receiveShadow = true;
+    
+    cubeLLeg.rotation.x = 0.5 * Math.PI;
+    cubeLLeg.position.x = 0.6;
+    cubeLLeg.position.y = 1.4;
+    
+    scene.add(cubeLLeg);
+    console.log("Added Left Cube Leg to scene...");
+    
+    //Add Right Cube Leg to the scene
+    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeGeometry = new CubeGeometry(0.75, 0.75, 2.750);
+    var cubeLLeg:Mesh = new Mesh(cubeGeometry, cubeMaterial);
+    cubeLLeg.castShadow = true;
+    cubeLLeg.receiveShadow = true;
+    
+    cubeLLeg.rotation.x = 0.5 * Math.PI;
+    cubeLLeg.position.x = -0.6;
+    cubeLLeg.position.y = 1.4;
+    
+    scene.add(cubeLLeg);
+    console.log("Added Right Cube Leg to scene...");
     
     
     // Add an AmbientLight to the scene
@@ -142,7 +170,7 @@ function init() {
     
     // add controls
     gui = new GUI();
-    control = new Control();
+    control = new Control(0.05);//pass rotation speed
     addControl(control);
 
     // Add framerate stats
@@ -162,7 +190,7 @@ function onResize(): void {
 }
 
 function addControl(controlObject: Control): void {
-    //gui.add(controlObject, 'clone');
+    gui.add(controlObject, 'rotationSpeed',-0.5, 0.5);
 
 }
 
@@ -178,6 +206,10 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop(): void {
     stats.update();
+    
+    scene.rotation.y += control.rotationSpeed;
+    
+
 
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
