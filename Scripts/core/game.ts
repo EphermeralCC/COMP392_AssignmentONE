@@ -85,7 +85,7 @@ function init() {
     console.log("Added Cube Head to scene...");
     
     //Add a Cube Torso to the Scene
-    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeMaterial = new LambertMaterial({color:0xff3333});
     cubeGeometry = new CubeGeometry(2, 2.5, 1.75);
     var cubeBody:Mesh = new Mesh(cubeGeometry, cubeMaterial);
     cubeBody.castShadow = true;
@@ -127,7 +127,7 @@ function init() {
     console.log("Added Right Cube Arm to scene...");
     
     //Add Left Cube Leg to the scene
-    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeMaterial = new LambertMaterial({color:0x006080});
     cubeGeometry = new CubeGeometry(0.75, 0.75, 2.750);
     var cubeLLeg:Mesh = new Mesh(cubeGeometry, cubeMaterial);
     cubeLLeg.castShadow = true;
@@ -141,7 +141,7 @@ function init() {
     console.log("Added Left Cube Leg to scene...");
     
     //Add Right Cube Leg to the scene
-    cubeMaterial = new LambertMaterial({color:0xE7D3B6});
+    cubeMaterial = new LambertMaterial({color:0x006080});
     cubeGeometry = new CubeGeometry(0.75, 0.75, 2.750);
     var cubeLLeg:Mesh = new Mesh(cubeGeometry, cubeMaterial);
     cubeLLeg.castShadow = true;
@@ -155,10 +155,10 @@ function init() {
     console.log("Added Right Cube Leg to scene...");
     
     
-    // Add an AmbientLight to the scene
-    ambientLight = new AmbientLight(0x090909);
-    scene.add(ambientLight);
-    console.log("Added an Ambient Light to Scene");
+    // // Add an AmbientLight to the scene
+    // ambientLight = new AmbientLight(0x090909);
+    // scene.add(ambientLight);
+    // console.log("Added an Ambient Light to Scene");
 	
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
@@ -170,7 +170,7 @@ function init() {
     
     // add controls
     gui = new GUI();
-    control = new Control(0.05);//pass rotation speed
+    control = new Control(0, 0, 0);//pass rotation speed
     addControl(control);
 
     // Add framerate stats
@@ -190,7 +190,9 @@ function onResize(): void {
 }
 
 function addControl(controlObject: Control): void {
-    gui.add(controlObject, 'rotationSpeed',-0.5, 0.5);
+    gui.add(controlObject, 'rotationX',-0.1, 0.1);
+    gui.add(controlObject, 'rotationY',-0.1, 0.1);
+    gui.add(controlObject, 'rotationZ',-0.1, 0.1);
 
 }
 
@@ -207,7 +209,7 @@ function addStatsObject() {
 function gameLoop(): void {
     stats.update();
     
-    scene.rotation.y += control.rotationSpeed;
+    scene.rotation.y += control.rotationY;
     
 
 
