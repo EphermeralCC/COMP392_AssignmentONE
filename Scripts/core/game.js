@@ -42,6 +42,13 @@ var stats;
 var step = 0;
 var cubeGeometry;
 var cubeMaterial;
+var cubeHead;
+var cubeBody;
+var cubeLArm;
+var cubeRArm;
+var cubeLLeg;
+var cubeRLeg;
+var cubeColour;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -60,7 +67,7 @@ function init() {
     //Add a Cube Head to the Scene
     cubeMaterial = new LambertMaterial({ color: 0xE7D3B6 });
     cubeGeometry = new CubeGeometry(1, 1, 1);
-    var cubeHead = new Mesh(cubeGeometry, cubeMaterial);
+    cubeHead = new Mesh(cubeGeometry, cubeMaterial);
     cubeHead.castShadow = true;
     cubeHead.receiveShadow = true;
     cubeHead.position.y = 5.75;
@@ -70,7 +77,7 @@ function init() {
     //Add a Cube Torso to the Scene
     cubeMaterial = new LambertMaterial({ color: 0xff3333 });
     cubeGeometry = new CubeGeometry(2, 2.5, 1.75);
-    var cubeBody = new Mesh(cubeGeometry, cubeMaterial);
+    cubeBody = new Mesh(cubeGeometry, cubeMaterial);
     cubeBody.castShadow = true;
     cubeBody.receiveShadow = true;
     cubeBody.position.y = 4;
@@ -80,7 +87,7 @@ function init() {
     //Add Left Cube Arm to the scene
     cubeMaterial = new LambertMaterial({ color: 0xE7D3B6 });
     cubeGeometry = new CubeGeometry(0.5, 0.5, 2);
-    var cubeLArm = new Mesh(cubeGeometry, cubeMaterial);
+    cubeLArm = new Mesh(cubeGeometry, cubeMaterial);
     cubeLArm.castShadow = true;
     cubeLArm.receiveShadow = true;
     cubeLArm.rotation.y = 0.5 * Math.PI;
@@ -92,7 +99,7 @@ function init() {
     //Add Right Cube Arm to the scene
     cubeMaterial = new LambertMaterial({ color: 0xE7D3B6 });
     cubeGeometry = new CubeGeometry(0.5, 0.5, 2);
-    var cubeRArm = new Mesh(cubeGeometry, cubeMaterial);
+    cubeRArm = new Mesh(cubeGeometry, cubeMaterial);
     cubeRArm.castShadow = true;
     cubeRArm.receiveShadow = true;
     cubeRArm.rotation.y = -0.5 * Math.PI;
@@ -104,7 +111,7 @@ function init() {
     //Add Left Cube Leg to the scene
     cubeMaterial = new LambertMaterial({ color: 0x006080 });
     cubeGeometry = new CubeGeometry(0.75, 0.75, 2.750);
-    var cubeLLeg = new Mesh(cubeGeometry, cubeMaterial);
+    cubeLLeg = new Mesh(cubeGeometry, cubeMaterial);
     cubeLLeg.castShadow = true;
     cubeLLeg.receiveShadow = true;
     cubeLLeg.rotation.x = 0.5 * Math.PI;
@@ -115,7 +122,7 @@ function init() {
     //Add Right Cube Leg to the scene
     cubeMaterial = new LambertMaterial({ color: 0x006080 });
     cubeGeometry = new CubeGeometry(0.75, 0.75, 2.750);
-    var cubeRLeg = new Mesh(cubeGeometry, cubeMaterial);
+    cubeRLeg = new Mesh(cubeGeometry, cubeMaterial);
     cubeRLeg.castShadow = true;
     cubeRLeg.receiveShadow = true;
     cubeRLeg.rotation.x = 0.5 * Math.PI;
@@ -133,10 +140,10 @@ function init() {
     structure.add(cubeRLeg);
     scene.add(structure);
     console.log("Group Cubes Together...");
-    // // Add an AmbientLight to the scene
-    // ambientLight = new AmbientLight(0x090909);
-    // scene.add(ambientLight);
-    // console.log("Added an Ambient Light to Scene");
+    // Add an AmbientLight to the scene
+    ambientLight = new AmbientLight(0x020202);
+    scene.add(ambientLight);
+    console.log("Added an Ambient Light to Scene");
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
     spotLight.position.set(-5.6, 23.1, -5.4);
@@ -146,7 +153,7 @@ function init() {
     console.log("Added a SpotLight Light to Scene");
     // add controls
     gui = new GUI();
-    control = new Control(0, 0, 0); //pass rotation speed
+    control = new Control(0, 0, 0, '#ffffff', '#ffffff', '#ffffff'); //pass rotation speed
     addControl(control);
     // Add framerate stats
     addStatsObject();
@@ -164,6 +171,22 @@ function addControl(controlObject) {
     gui.add(controlObject, 'rotationX', -0.1, 0.1);
     gui.add(controlObject, 'rotationY', -0.1, 0.1);
     gui.add(controlObject, 'rotationZ', -0.1, 0.1);
+    //Control for changing the colour of the cube parts
+    gui.addColor(controlObject, 'skinColour').onChange(function changeTorsoColour(color) {
+        cubeColour = new LambertMaterial({ color: color });
+        cubeHead.material = cubeColour;
+        cubeLArm.material = cubeColour;
+        cubeRArm.material = cubeColour;
+    });
+    gui.addColor(controlObject, 'shirtColour').onChange(function changeTorsoColour(color) {
+        cubeColour = new LambertMaterial({ color: color });
+        cubeBody.material = cubeColour;
+    });
+    gui.addColor(controlObject, 'pantColour').onChange(function changeLegLColour(color) {
+        cubeColour = new LambertMaterial({ color: color });
+        cubeLLeg.material = cubeColour;
+        cubeRLeg.material = cubeColour;
+    });
 }
 function addStatsObject() {
     stats = new Stats();
