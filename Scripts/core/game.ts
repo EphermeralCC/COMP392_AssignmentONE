@@ -37,6 +37,7 @@ var axes: AxisHelper;
 var cube: Mesh;
 var plane: Mesh;
 var sphere: Mesh;
+var structure: THREE.Group;
 var ambientLight: AmbientLight;
 var spotLight: SpotLight;
 var control: Control;
@@ -143,17 +144,27 @@ function init() {
     //Add Right Cube Leg to the scene
     cubeMaterial = new LambertMaterial({color:0x006080});
     cubeGeometry = new CubeGeometry(0.75, 0.75, 2.750);
-    var cubeLLeg:Mesh = new Mesh(cubeGeometry, cubeMaterial);
-    cubeLLeg.castShadow = true;
-    cubeLLeg.receiveShadow = true;
+    var cubeRLeg:Mesh = new Mesh(cubeGeometry, cubeMaterial);
+    cubeRLeg.castShadow = true;
+    cubeRLeg.receiveShadow = true;
     
-    cubeLLeg.rotation.x = 0.5 * Math.PI;
-    cubeLLeg.position.x = -0.6;
-    cubeLLeg.position.y = 1.4;
+    cubeRLeg.rotation.x = 0.5 * Math.PI;
+    cubeRLeg.position.x = -0.6;
+    cubeRLeg.position.y = 1.4;
     
-    scene.add(cubeLLeg);
+    scene.add(cubeRLeg);
     console.log("Added Right Cube Leg to scene...");
     
+    //Grouping all Cube parts under one Mesh
+    structure = new THREE.Group();
+    structure.add(cubeHead);
+    structure.add(cubeBody);
+    structure.add(cubeLArm);
+    structure.add(cubeLLeg);
+    structure.add(cubeRArm);
+    structure.add(cubeRLeg);
+    scene.add(structure);
+    console.log("Group Cubes Together...");
     
     // // Add an AmbientLight to the scene
     // ambientLight = new AmbientLight(0x090909);
@@ -162,8 +173,8 @@ function init() {
 	
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
-    spotLight.position.set(5.6, 23.1, 5.4);
-    spotLight.rotation.set(-0.8, 42.7, 19.5);
+    spotLight.position.set(-5.6, 23.1, -5.4);
+    spotLight.rotation.set(0.8, 42.7, -19.5);
     spotLight.castShadow = true;
     scene.add(spotLight);
     console.log("Added a SpotLight Light to Scene");
@@ -209,7 +220,9 @@ function addStatsObject() {
 function gameLoop(): void {
     stats.update();
     
-    scene.rotation.y += control.rotationY;
+    structure.rotation.y += control.rotationY;
+    structure.rotation.x += control.rotationX;
+    structure.rotation.z += control.rotationZ;
     
 
 
