@@ -1,3 +1,9 @@
+//The Source file name: game.ts 
+//Author’s name: Christine Cho
+//Last Modified by: Christine Cho
+//Date last Modified: 02/05/2016
+//Program description: The main controller for the cubeman 
+//Revision History: Complete
 /// <reference path="_reference.ts"/>
 // MAIN GAME FILE
 // THREEJS Aliases
@@ -41,8 +47,9 @@ var gui;
 var stats;
 var step = 0;
 var cubeGeometry;
+var sphereGeometry;
 var cubeMaterial;
-var cubeHead;
+var sphereHead;
 var cubeBody;
 var cubeLArm;
 var cubeRArm;
@@ -64,16 +71,16 @@ function init() {
     plane.rotation.z = -0.0095 * Math.PI;
     scene.add(plane);
     console.log("Added Plane Primitive to scene...");
-    //Add a Cube Head to the Scene
+    //Add a Sphere Head to the Scene
     cubeMaterial = new LambertMaterial({ color: 0xE7D3B6 });
-    cubeGeometry = new CubeGeometry(1, 1, 1);
-    cubeHead = new Mesh(cubeGeometry, cubeMaterial);
-    cubeHead.castShadow = true;
-    cubeHead.receiveShadow = true;
-    cubeHead.position.y = 5.75;
-    cubeHead.rotation.y = -0.010 * Math.PI;
-    scene.add(cubeHead);
-    console.log("Added Cube Head to scene...");
+    sphereGeometry = new SphereGeometry(.75, 50, 50, 0, Math.PI * 2, 0, Math.PI * 2);
+    sphereHead = new Mesh(sphereGeometry, cubeMaterial);
+    sphereHead.castShadow = true;
+    sphereHead.receiveShadow = true;
+    sphereHead.position.y = 5.75;
+    sphereHead.rotation.y = -0.010 * Math.PI;
+    scene.add(sphereHead);
+    console.log("Added Sphere Head to scene...");
     //Add a Cube Torso to the Scene
     cubeMaterial = new LambertMaterial({ color: 0xff3333 });
     cubeGeometry = new CubeGeometry(2, 2.5, 1.75);
@@ -132,7 +139,7 @@ function init() {
     console.log("Added Right Cube Leg to scene...");
     //Grouping all Cube parts under one Mesh
     structure = new THREE.Group();
-    structure.add(cubeHead);
+    structure.add(sphereHead);
     structure.add(cubeBody);
     structure.add(cubeLArm);
     structure.add(cubeLLeg);
@@ -174,7 +181,7 @@ function addControl(controlObject) {
     //Control for changing the colour of the cube parts
     gui.addColor(controlObject, 'skinColour').onChange(function changeTorsoColour(color) {
         cubeColour = new LambertMaterial({ color: color });
-        cubeHead.material = cubeColour;
+        sphereHead.material = cubeColour;
         cubeLArm.material = cubeColour;
         cubeRArm.material = cubeColour;
     });
